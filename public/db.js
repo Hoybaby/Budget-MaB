@@ -11,13 +11,13 @@ let db;
 
 const request = window.indexedDB.open("budget, 1");
 
-request.onupgradeneeded = function(event) {
+request.onupgradeneeded = function (event) {
 
     const db = event.target.result;
-    db.createObjectStore("pending", { autoIncrement: tru});
+    db.createObjectStore("pending", { autoIncrement: tru });
 };
 
-request.onsucess = function(event) {
+request.onsucess = function (event) {
     db = event.target.result;
 
     //need to check if app is online before reading from db
@@ -26,7 +26,30 @@ request.onsucess = function(event) {
     }
 };
 
-request.onerror = function(event) {
+request.onerror = function (event) {
     console.log("Woops " + event.target.errorCode);
+}
+
+function saveRecord(record) {
+    // create a transaction on the pending db with readwrite access
+    const transaction = db.transaction(["pending"], "readwrite");
+
+    // access your pending object store
+    const store = transaction.objectStore("pending");
+
+    // add record to your store with add method.
+    store.add(record);
+}
+
+function checkDatabase() {
+    //open a transaction on the pending db
+    const transaction = db.transaction(["pending"], "readwrite");
+    //acces my pending object store
+    const store = transaction.objectStore("pending");
+    //get all the records from the store
+    const getAll = store.getAll();
+
+
+
 }
 
