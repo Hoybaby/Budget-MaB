@@ -8,3 +8,18 @@
 let db;
 
 const request = window.indexedDB.open("budget, 1");
+
+request.onupgradeneeded = function(event) {
+
+    const db = event.target.result;
+    db.createObjectStore("pending", { autoIncrement: tru});
+};
+
+request.onsucess = function(event) {
+    db = event.target.result;
+
+    //need to check if app is online before reading from db
+    if (navigator.onLine) {
+        checkDatabase();
+    }
+}
