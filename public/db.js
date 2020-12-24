@@ -4,7 +4,7 @@
 //we need an onsuccess  to update a property of a record. a onsuccess is as described below
 //ets the associated record from the IDBObjectStore (made available as objectStoreTitleRequest.result), updates one property 
 //of the record, and then puts the updated record back into the object store
-
+// in case of an error we should have a method just like onsuccess that calls for error if it occurs with onerror
 let db;
 
 const request = window.indexedDB.open("budget, 1");
