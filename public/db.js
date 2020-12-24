@@ -5,6 +5,8 @@
 //ets the associated record from the IDBObjectStore (made available as objectStoreTitleRequest.result), updates one property 
 //of the record, and then puts the updated record back into the object store
 // in case of an error we should have a method just like onsuccess that calls for error if it occurs with onerror
+//after several functions we need a way to save the data
+
 let db;
 
 const request = window.indexedDB.open("budget, 1");
@@ -22,4 +24,9 @@ request.onsucess = function(event) {
     if (navigator.onLine) {
         checkDatabase();
     }
+};
+
+request.onerror = function(event) {
+    console.log("Woops " + event.target.errorCode);
 }
+
